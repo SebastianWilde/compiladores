@@ -1,0 +1,9 @@
+ent ini ( )
+{
+	var
+	{
+		ent a = 5 .
+	}
+	a + 6 .
+	regresar a.
+}
