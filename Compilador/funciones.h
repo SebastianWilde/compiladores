@@ -35,6 +35,69 @@ string char_to_string(char a)
 	aux+=a;
 	return aux;
 }
+inline bool is_number(char a)
+{
+    return int(a)>47 && int(a)<58;
+}
+
+inline bool is_letter(char a)
+{
+    return (int(a)>96 && int(a)<123);
+}
+
+inline bool is_simbol(char a)
+{
+    return (int(a)>32 && int (a)<48) ||(int(a)>57 && int (a)<64)||(int(a)>122 && int (a)<126) ||(int(a)==57 || int (a)==93);
+}
+/*Funcion para aumentar espacios entre palabras*/
+bool tramp(string &palabra)
+{
+    string temp="";
+    for (int i=0;i<(int)palabra.size();)
+    {
+        if (is_letter(palabra[i]))
+        {
+            while (!is_simbol(palabra[i]) && int(palabra[i])!=32)
+            {
+                temp+=palabra[i];
+                i++;
+            }
+            temp += " ";
+        }
+        else if (is_number(palabra[i]))
+        {
+
+            while( (palabra[i]==',') || (!is_letter(palabra[i]) && !is_simbol(palabra[i]) && int(palabra[i])!=32))
+            {
+                temp+=palabra[i];
+                i++;
+            }
+            temp += " ";
+        }
+        else
+        {
+            if (int(palabra[i])==39 || int(palabra[i])==34)
+            {
+                temp += palabra[i];
+                i++;
+                while (int(palabra[i])==39 || int(palabra[i])==34)
+                {
+                    temp += palabra[i];
+                    i++;
+                }
+                temp += " ";
+            }
+            else
+            {
+                temp += palabra[i];
+                temp += " ";
+                i++;
+            }
+        }
+    }
+    palabra=temp;
+    return 1;
+}
 
 /*Funcion para aumentar espacios*/
 string espacio(int n)
@@ -75,7 +138,7 @@ bool str_to_vector (vector <string> & palabras, string linea)
     string temp ="";
     for (int i = 0; i<(int)linea.size() ; i++)
     {
-        if (int(linea[i]) == 32 || int(linea[i]) == 9)
+        if (int(linea[i]) == 32 || int(linea[i]) == 9)//32 es espacio y 9 es tab
         {
             if (temp  != "")
             {

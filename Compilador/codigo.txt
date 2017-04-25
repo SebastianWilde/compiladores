@@ -2,7 +2,9 @@ ent ini ( )
 {
 	var
 	{
-		ent a = 5 .
+		car a = 'a' .
+		cad b = "hogggg555la" .
+		dec f = 35,fff .
 	}
 	a + 6 .
 	regresar a.

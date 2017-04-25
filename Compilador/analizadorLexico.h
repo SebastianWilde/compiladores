@@ -9,11 +9,13 @@ string others(string palabra)
     {
         for (int i = 1; i < (int)palabra.size();i++)
         {
-            if (palabra[i] == ',') aux = 1;
+            if (palabra[i] == ',' && aux != 1 ) aux = 1;
+            if (palabra[i] == ',' && aux == 1 ) aux = 2;
+            if (aux == 1 && (int(palabra[0])>47 && int(palabra[0])<58)) aux = 3;
             if (int(palabra[0])<47 && int(palabra[0])>58) aux = 2;
         }
         if (aux == 0) return "NUM";
-        else if (aux == 1) return "DEC";
+        else if (aux == 3) return "DEC";
         else return "err";
     }
     else if (int(palabra[0])>96 && int(palabra[0])<123)
