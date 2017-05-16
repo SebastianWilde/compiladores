@@ -57,17 +57,18 @@ bool tramp(string &palabra)
     {
         if (is_letter(palabra[i]))
         {
-            while (!is_simbol(palabra[i]) && int(palabra[i])!=32)
+            while (!is_simbol(palabra[i]) && int(palabra[i])!=32 || is_letter(palabra[i]) || is_number(palabra[i]))
             {
                 temp+=palabra[i];
                 i++;
             }
-            temp += " ";
+            temp +=" ";
+            //cout<<"her "<<temp<<endl;
         }
         else if (is_number(palabra[i]))
         {
 
-            while( (palabra[i]==',') || (!is_letter(palabra[i]) && !is_simbol(palabra[i]) && int(palabra[i])!=32))
+            while( (palabra[i]==',') || (!is_simbol(palabra[i]) && int(palabra[i])!=32)) //!is_letter(palabra[i]) &&
             {
                 temp+=palabra[i];
                 i++;
@@ -76,16 +77,34 @@ bool tramp(string &palabra)
         }
         else
         {
-            if (int(palabra[i])==39 || int(palabra[i])==34)
+            if (int(palabra[i])==39)
             {
                 temp += palabra[i];
-                i++;
-                while (int(palabra[i])==39 || int(palabra[i])==34)
+                i+=1;
+                while (int(palabra[i])!=39 && i<(int)palabra.size())
                 {
                     temp += palabra[i];
                     i++;
                 }
+                //cout<<palabra[i]<<endl;
+                temp += palabra[i];
                 temp += " ";
+                i+=1;
+                //cout<<"her "<<temp<<endl;
+            }
+            else if (int(palabra[i])==34)
+            {
+                temp += palabra[i];
+                i+=1;
+                while ( int(palabra[i])!=34 && i<(int)palabra.size())
+                {
+                    temp += palabra[i];
+                    i++;
+                }
+                temp += palabra[i];
+                temp += " ";
+                i+=1;
+                //cout<<"her "<<temp<<endl;
             }
             else
             {
@@ -130,6 +149,7 @@ bool txt_to_vectorstr(string ficher, vector <string> &lineas)
     }
     return 1;
 }
+
 /* Funcion para quitar los espacios a un string*/
 bool str_to_vector (vector <string> & palabras, string linea)
 {

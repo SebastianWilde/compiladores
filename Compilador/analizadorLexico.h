@@ -9,9 +9,22 @@ string others(string palabra)
     {
         for (int i = 1; i < (int)palabra.size();i++)
         {
-            if (palabra[i] == ',' && aux != 1 ) aux = 1;
-            if (palabra[i] == ',' && aux == 1 ) aux = 2;
-            if (aux == 1 && (int(palabra[0])>47 && int(palabra[0])<58)) aux = 3;
+            if (palabra[i] == ',' && aux == 0 )
+            {
+                aux = 1;
+                continue;
+            }
+            if (palabra[i] == ',' && aux == 1 )
+            {
+                aux = 2;
+                continue;
+            }
+            if (aux == 1 && (int(palabra[i])>47 && int(palabra[i])<58))
+            {
+                aux = 3;
+                //cout<<"here "<<endl;
+                continue;
+            }
             if (int(palabra[0])<47 && int(palabra[0])>58) aux = 2;
         }
         if (aux == 0) return "NUM";
@@ -24,6 +37,7 @@ string others(string palabra)
         {
             if (int(palabra[0])<48 && int(palabra[0])>57 )  aux = 1;
             if (int(palabra[0])<97 && int(palabra[0])>123) aux = 1;
+
         }
         if (aux == 0) return "ID";
         else return "err";
@@ -86,7 +100,13 @@ string a1(string palabra)
             token = ")";
             break;
         case ';':
-            token = "+";
+            token = ";";
+            break;
+        case '&':
+            token = "&";
+            break;
+        case '|':
+            token = "|";
             break;
         default:
             token = others(palabra);
@@ -291,7 +311,7 @@ bool analizador_linea(int n, string linea)
         token = my_token(palabras[i]);
         if (token == "err")
         {
-            cout <<"Linea "<<n_linea<<" lexema"<<palabras[i]<<endl;
+            cout <<"Linea "<<n_linea<<" lexema "<<palabras[i]<<endl;
             return 0;
         }
         lexema = palabras[i];

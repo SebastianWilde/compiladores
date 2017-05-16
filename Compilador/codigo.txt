@@ -1,11 +1,35 @@
-ent ini ( )
+def funcion ( ent a )
 {
-	var
+	regresar a+5.
+}
+ent ini()
+{
+	var 
 	{
 		car a = 'a' .
-		cad b = "hogggg555la" .
-		dec f = 35,fff .
+		cad b345678 = "555hogggg555la" .
+		dec f = 35,0.
 	}
+	si(( a & b | (c & 0 ))) 
+	{
+		car a = 8 .
+	}
+	quizas ( a & b)
+	{
+		a = 7 . 
+	}
+	sino    
+	{
+		a = 6 . 
+	}
+	bucle ( f < 10 ) 
+	{
+		f + 1 . 
+		llamar funcion ( f ) .
+		cortar.
+	}	
 	a + 6 .
-	regresar a.
+	a == 'b' .
+	cad + "u" .
+	regresar a . 
 }
