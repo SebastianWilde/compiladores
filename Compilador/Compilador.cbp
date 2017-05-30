@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="analisisSintactico.h" />
 		<Unit filename="analizadorLexico.h" />
 		<Unit filename="funciones.h" />
 		<Unit filename="main.cpp" />

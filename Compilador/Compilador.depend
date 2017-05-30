@@ -3,19 +3,23 @@
 	<iostream>
 	<fstream>
 
-1493222410 source:f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\main.cpp
+1496119698 source:f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\main.cpp
 	<iostream>
 	<fstream>
 	<vector>
 	<sstream>
 	"analizadorLexico.h"
+	"analisisSintactico.h"
 
-1493221970 f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\analizadorlexico.h
+1496119962 f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\analizadorlexico.h
 	"funciones.h"
 
-1493219977 f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\funciones.h
+1496079414 f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\funciones.h
 	<iostream>
 	<fstream>
 	<vector>
 	<sstream>
+
+1496119682 f:\sebastian\documents\sanpa\8semestre\compiladores\practica\compiladores\compilador\analisissintactico.h
+	<stack>
 

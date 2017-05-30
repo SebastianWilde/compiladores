@@ -1,6 +1,6 @@
-def funcion ( ent a )
+def ent funcion ( ent a )
 {
-	regresar a+5.
+	retornar a+5.
 }
 ent ini()
 {
@@ -10,7 +10,7 @@ ent ini()
 		cad b345678 = "555hogggg555la" .
 		dec f = 35,0.
 	}
-	si(( a & b | (c & 0 ))) 
+	si((( a & b | (c & 0 ))) 
 	{
 		car a = 8 .
 	}
@@ -31,5 +31,5 @@ ent ini()
 	a + 6 .
 	a == 'b' .
 	cad + "u" .
-	regresar a . 
+	retornar a . 
 }

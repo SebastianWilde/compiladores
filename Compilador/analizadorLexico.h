@@ -2,6 +2,17 @@
 #define ANALIZADORLEXICO_H_INCLUDED
 #include "funciones.h"
 /*Analisis si es identificador o numero o char o string*/
+
+struct Lexema
+{
+    int n_linea;
+    string token;
+    string lex;
+    void Print()
+    {
+        cout<<n_linea <<" "<<token<<" "<<lex<<endl;
+    }
+};
 string others(string palabra)
 {
     int aux = 0;
@@ -31,7 +42,7 @@ string others(string palabra)
         else if (aux == 3) return "DEC";
         else return "err";
     }
-    else if (int(palabra[0])>96 && int(palabra[0])<123)
+    else if ((int(palabra[0])>96 && int(palabra[0])<123) || palabra[0] == '_')
     {
         for (int i = 1; i < (int)palabra.size();i++)
         {
@@ -253,7 +264,7 @@ string a6 (string palabra)
 string a8 (string palabra)
 {
     string token;
-    if (palabra == "regresar")
+    if (palabra == "retornar")
     {
         return token = palabra;
     }
@@ -298,10 +309,12 @@ string my_token(string palabra)
 }
 
 /*Analizador de cada linea*/
-bool analizador_linea(int n, string linea)
+bool analizador_linea(int n, string linea, vector<Lexema> & lexemas)
 {
+    Lexema aux;
     string temp="";
     string n_linea = int_to_string(n+1);
+    aux.n_linea = str_to_int(n_linea);
     string token,lexema;
     vector <string> palabras;
     str_to_vector(palabras,linea);
@@ -309,21 +322,24 @@ bool analizador_linea(int n, string linea)
     for (int i=0; i< (int)palabras.size();i++)
     {
         token = my_token(palabras[i]);
+        aux.token = token;
         if (token == "err")
         {
             cout <<"Linea "<<n_linea<<" lexema "<<palabras[i]<<endl;
             return 0;
         }
         lexema = palabras[i];
+        aux.lex = lexema;
         temp += n_linea + espacio(4-(int)n_linea.size()) + token + espacio(10-(int)token.size()) + lexema;
         str_to_txt(escritura,temp);
+        lexemas.push_back(aux);
         temp = "";
     }
     return 1;
 }
 
 /*Analizador lexico de todo el codigo*/
-bool analizador_lexico(vector <string> lineas)
+bool analizador_lexico(vector <string> lineas,vector<Lexema> &lexemas)
 {
     string aux = "Nº  TOKEN     LEXEMA";
     string escritura = "analisisLexico.txt";
@@ -331,12 +347,18 @@ bool analizador_lexico(vector <string> lineas)
     for(int i=0;i<(int)lineas.size();i++)
     {
         if (is_Empty(lineas[i])) continue;
-        if (analizador_linea(i,lineas[i])==0)
+        if (analizador_linea(i,lineas[i],lexemas)==0)
         {
             cout<<"Error lexico"<<endl;
             return 0;
         }
+
     }
+    Lexema temp;
+    temp.lex="$";
+    temp.token="$";
+    temp.n_linea=(int) lineas.size() + 1;
+    lexemas.push_back(temp);
     return 1;
 }
 

@@ -42,7 +42,7 @@ inline bool is_number(char a)
 
 inline bool is_letter(char a)
 {
-    return (int(a)>96 && int(a)<123);
+    return ((int(a)>96 && int(a)<123)|| (a == '_'));
 }
 
 inline bool is_simbol(char a)
@@ -55,9 +55,9 @@ bool tramp(string &palabra)
     string temp="";
     for (int i=0;i<(int)palabra.size();)
     {
-        if (is_letter(palabra[i]))
+        if (is_letter(palabra[i])) //palabras
         {
-            while (!is_simbol(palabra[i]) && int(palabra[i])!=32 || is_letter(palabra[i]) || is_number(palabra[i]))
+            while (!is_simbol(palabra[i]) && int(palabra[i])!=32 && (is_letter(palabra[i]) || is_number(palabra[i])))
             {
                 temp+=palabra[i];
                 i++;
@@ -65,19 +65,29 @@ bool tramp(string &palabra)
             temp +=" ";
             //cout<<"her "<<temp<<endl;
         }
-        else if (is_number(palabra[i]))
+        else if (is_number(palabra[i])) //numeros
         {
 
-            while( (palabra[i]==',') || (!is_simbol(palabra[i]) && int(palabra[i])!=32)) //!is_letter(palabra[i]) &&
+            while( is_number(palabra[i]))//(palabra[i]==',') || (!is_simbol(palabra[i]) && int(palabra[i])!=32)) //!is_letter(palabra[i]) &&
             {
                 temp+=palabra[i];
                 i++;
+            }
+            if (palabra[i]==',')
+            {
+                temp+=palabra[i];
+                i++;
+                while( is_number(palabra[i])&& i<(int)palabra.size())
+                {
+                    temp+=palabra[i];
+                    i++;
+                }
             }
             temp += " ";
         }
         else
         {
-            if (int(palabra[i])==39)
+            if (int(palabra[i])==39) // 'char'
             {
                 temp += palabra[i];
                 i+=1;
@@ -92,7 +102,7 @@ bool tramp(string &palabra)
                 i+=1;
                 //cout<<"her "<<temp<<endl;
             }
-            else if (int(palabra[i])==34)
+            else if (int(palabra[i])==34) //"string"
             {
                 temp += palabra[i];
                 i+=1;
@@ -106,7 +116,7 @@ bool tramp(string &palabra)
                 i+=1;
                 //cout<<"her "<<temp<<endl;
             }
-            else
+            else //otros simbolos
             {
                 temp += palabra[i];
                 temp += " ";

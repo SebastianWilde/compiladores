@@ -1,0 +1,55 @@
+s declaracion_fun td ini ( ) { cuerpo }
+declaracion_fun def td ID ( parametros ) { cuerpo } declaracion_fun
+declaracion_fun #
+td ent
+td dec
+td bin
+td car
+td cad
+td vac
+parametros td ID parametros_1
+parametros #
+parametros_1 ; parametros
+parametros_1 #
+def_variables td ID def_variables_1 . def_variables 
+def_variables_1 asignacion
+def_variables_1 ; ID def_variables_1
+def_variables_1 #
+asignacion = valor .
+valor ID
+valor NUM
+valor DEC
+valor LET
+valor PAL
+valor llamada_funcion
+valor operacion
+cuerpo var { def_variables } cuerpo
+cuerpo ID asignacion cuerpo
+cuerpo operacion . cuerpo
+cuerpo si ( condicion ) { cuerpo } condicionales_2 cuerpo
+cuerpo bucle ( condicion ) { cuerpo } cuerpo
+cuerpo llamada_funcion . cuerpo
+cuerpo retornar valor .
+cuerpo cortar .
+cuerpo #
+operacion operacion_1 op operacion_1
+operacion_1 valor
+operacion_1 ( valor )
+op +
+op -
+op *
+op /
+condicionales_2 quizas ( condicion ) { cuerpo } condicionales_2
+condicionales_2 sino { cuerpo }
+condicionales_2 #
+condicion operacion_1 opl operacion_1
+opl <
+opl >
+opl <=
+opl >=
+opl ==
+opl /=
+llamada_funcion llamar ID ( par )
+par valor par_1
+par_1 ; par
+par_1 #
