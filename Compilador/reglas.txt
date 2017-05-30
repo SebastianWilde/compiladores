@@ -15,7 +15,7 @@ def_variables td ID def_variables_1 . def_variables
 def_variables_1 asignacion
 def_variables_1 ; ID def_variables_1
 def_variables_1 #
-asignacion = valor .
+asignacion = valor 
 valor ID
 valor NUM
 valor DEC
@@ -24,7 +24,7 @@ valor PAL
 valor llamada_funcion
 valor operacion
 cuerpo var { def_variables } cuerpo
-cuerpo ID asignacion cuerpo
+cuerpo ID asignacion . cuerpo
 cuerpo operacion . cuerpo
 cuerpo si ( condicion ) { cuerpo } condicionales_2 cuerpo
 cuerpo bucle ( condicion ) { cuerpo } cuerpo

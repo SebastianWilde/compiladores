@@ -374,16 +374,26 @@ bool cargarTablaSintactica(vector<Componte> &terminales, vector<Componte> &nTerm
     return 1;
 }
 
-vector <Componte> siguienteProduccion(string nt, string t, vector<Componte> nTerminales, vector<Componte> terminales, TablaSintactica ts)
+int siguienteProduccion( vector <Componte> & aux,string nt, string t, vector<Componte> nTerminales, vector<Componte> terminales, TablaSintactica ts)
 {
-    vector <Componte> aux;
+    aux.clear();
     int indice = ts.tabla[componenteID(nt,nTerminales)][componenteID(t,terminales)];
-    if (indice == -1) return aux;
+    if (indice == -1) return indice;
+    else if(indice == -2) return indice;
     aux = nTerminales[componenteID(nt,nTerminales)].reglas[indice];
     for (int i=0;i<(int)aux.size();i++)
         cout<<aux[i].simbolo<<" ";
     cout<<endl;
-    return aux;
+    return 1;
+}
+inline bool esOp(string token)
+{
+    return token=="+" || token=="-"||token=="*"||token=="/";
+}
+
+inline bool esOpl(string token)
+{
+    return token=="<" || token==">"||token=="<="||token==">="||token=="=="||token=="/=";
 }
 
 bool aSintactico(vector <Lexema> lexemas)
@@ -410,6 +420,7 @@ bool aSintactico(vector <Lexema> lexemas)
     pila.push(simbolo_final);
     pila.push(simbolo_inicial);
     int iterador = 0;
+    int errores = 0;
     while (!pila.empty())//&&iterador<4)
     {
         Componte Saliente;
@@ -425,17 +436,32 @@ bool aSintactico(vector <Lexema> lexemas)
                 cout<<"Error en la linea: "<<lexemas[iterador].n_linea<<endl;
                 cout<<Saliente.simbolo<<" incompatible con el lexema "<<lexemas[iterador].token<<endl;
                 iterador ++;
+                errores ++;
             }
         }
         else
         {
             vector <Componte> Entrante;
-            Entrante = siguienteProduccion(Saliente.simbolo,lexemas[iterador].token,nTerminales,terminales,ts);
-            if (!Entrante.empty())
+            int busqueda;
+            if (Saliente.simbolo == "valor" && esOp(lexemas[iterador+1].token))
+            {
+                Entrante = nTerminales[componenteID(Saliente.simbolo,nTerminales)].reglas[6];
+                busqueda = 1;
+            }
+            else if(Saliente.simbolo == "operacion_1" && esOp(lexemas[iterador+1].token))
+            {
+                Entrante = nTerminales[componenteID("valor",nTerminales)].reglas[0];
+                busqueda = 1;
+            }
+            else
+                busqueda = siguienteProduccion(Entrante,Saliente.simbolo,lexemas[iterador].token,nTerminales,terminales,ts);
+            if (busqueda == 1)
                 for (int i = Entrante.size()-1;i>-1;i--)
                     pila.push(Entrante[i]);
         }
     }
+
+    cout<<endl<<endl<<"Cantidad de errores "<<errores<<endl<<endl;
     return 1;
 
 }
