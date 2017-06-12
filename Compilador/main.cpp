@@ -48,6 +48,7 @@ int main()
     /*for (int i=0;i<(int)lexemas.size();i++)
         lexemas[i].Print();*/
     aSintactico(lexemas);
+    cout<< "Analizador sintactico terminado"<<endl;
     cout << "Hello world!" << endl;
     return 0;
 }

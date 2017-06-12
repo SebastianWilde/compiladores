@@ -294,7 +294,8 @@ string my_token(string palabra)
             token = a4(palabra);
             break;
         case 5:
-            token = a4(palabra);
+            token = a5(palabra);
+            break;
         case 6:
             token = a6 (palabra);
             break;

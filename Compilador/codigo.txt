@@ -1,6 +1,6 @@
 def ent funcion ( ent a )
 {
-	retornar a+5.
+	retornar a+(5+8).
 }
 ent ini()
 {
@@ -10,9 +10,9 @@ ent ini()
 		cad b345678 = "555hogggg555la" .
 		dec f = 35,0.
 	}
-	si((( a & b | (c & 0 ))) 
+	si( ( a & b ) | ( c & 0 ) ) 
 	{
-		car a = 8 .
+		a = 8 .
 	}
 	quizas ( a & b)
 	{
@@ -22,14 +22,28 @@ ent ini()
 	{
 		a = 6 . 
 	}
-	bucle ( f < 10 ) 
+    bucle ((f < 10) & (4<4)) 
 	{
 		f + 1 . 
-		llamar funcion ( f ) .
+		llamar funcion ((f+4)+(5+(5+5))).
 		cortar.
-	}	
+	}
+	bucle ( 5 /= 8) 
+	{
+		b + 4 .
+		si (b<8)
+		{
+			cortar .
+		}
+	}
+
+    cortar
+	quizas(4<76)
+
+        	
 	a + 6 .
 	a == 'b' .
-	cad + "u" .
+	cad = "u"+6+3,4.
+        cortar.
 	retornar a . 
 }

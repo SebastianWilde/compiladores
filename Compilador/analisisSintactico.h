@@ -120,7 +120,24 @@ bool inicializarGramatica(vector<Componte> &terminales, vector<Componte> &nTermi
 }
 bool cargarTablaSintactica(vector<Componte> &terminales, vector<Componte> &nTerminales, TablaSintactica & tablaSintactica)
 {
+    //Capturar valores de la tabla sintactica
+    vector<string> tabla;
+    string fichero = "tabla.txt";
+    txt_to_vectorstr(fichero,tabla);
+    //for (int i = 0;i<(int)tabla.size();i++) cout<<tabla[i]<<endl;
+
+    // Dividir cada regla en terminales y no terminales y agregarlos
+    for (int i=0;i<(int)tabla.size();i++)
+    {
+        vector<string> vecStrTabla;
+        str_to_vector(vecStrTabla,tabla[i]);
+        //cout << vecStrTabla[0] <<" "<<vecStrTabla[1]<<" "<<vecStrTabla[2]<<endl;
+        tablaSintactica.tabla[componenteID(vecStrTabla[0],nTerminales)][componenteID(vecStrTabla[1],terminales)]
+        = str_to_int(vecStrTabla[2]);
+    }
+
     //Conjunto primero
+    /*
     tablaSintactica.tabla[componenteID("s",nTerminales)][componenteID("def",terminales)] = 0;
     tablaSintactica.tabla[componenteID("s",nTerminales)][componenteID("ent",terminales)] = 0;
     tablaSintactica.tabla[componenteID("s",nTerminales)][componenteID("dec",terminales)] = 0;
@@ -370,7 +387,7 @@ bool cargarTablaSintactica(vector<Componte> &terminales, vector<Componte> &nTerm
     tablaSintactica.tabla[componenteID("par",nTerminales)][componenteID(")",terminales)] = -1;
 
     tablaSintactica.tabla[componenteID("par_1",nTerminales)][componenteID(")",terminales)] = -1;
-
+    */
     return 1;
 }
 
@@ -378,6 +395,7 @@ int siguienteProduccion( vector <Componte> & aux,string nt, string t, vector<Com
 {
     aux.clear();
     int indice = ts.tabla[componenteID(nt,nTerminales)][componenteID(t,terminales)];
+    //cout<<endl<<"este es el indice "<<indice<<nt<<t<<endl;
     if (indice == -1) return indice;
     else if(indice == -2) return indice;
     aux = nTerminales[componenteID(nt,nTerminales)].reglas[indice];
@@ -393,7 +411,7 @@ inline bool esOp(string token)
 
 inline bool esOpl(string token)
 {
-    return token=="<" || token==">"||token=="<="||token==">="||token=="=="||token=="/=";
+    return token=="<" || token==">"||token=="<="||token==">="||token=="=="||token=="/="||token=="&"||token=="|";
 }
 
 bool aSintactico(vector <Lexema> lexemas)
@@ -421,6 +439,7 @@ bool aSintactico(vector <Lexema> lexemas)
     pila.push(simbolo_inicial);
     int iterador = 0;
     int errores = 0;
+    vector <string> lista_errores;
     while (!pila.empty())//&&iterador<4)
     {
         Componte Saliente;
@@ -433,8 +452,10 @@ bool aSintactico(vector <Lexema> lexemas)
                 iterador ++;
             else
             {
-                cout<<"Error en la linea: "<<lexemas[iterador].n_linea<<endl;
-                cout<<Saliente.simbolo<<" incompatible con el lexema "<<lexemas[iterador].token<<endl;
+                string error;
+                error = "Error en la linea: " + int_to_string(lexemas[iterador].n_linea) + " " +
+                Saliente.simbolo +" incompatible con el lexema "+lexemas[iterador].token;//<<endl;
+                lista_errores.push_back(error);
                 iterador ++;
                 errores ++;
             }
@@ -443,14 +464,25 @@ bool aSintactico(vector <Lexema> lexemas)
         {
             vector <Componte> Entrante;
             int busqueda;
-            if (Saliente.simbolo == "valor" && esOp(lexemas[iterador+1].token))
+            if (Saliente.simbolo == "valor" && (esOp(lexemas[iterador+1].token)||esOpl(lexemas[iterador+1].token)))
             {
                 Entrante = nTerminales[componenteID(Saliente.simbolo,nTerminales)].reglas[6];
                 busqueda = 1;
             }
-            else if(Saliente.simbolo == "operacion_1" && esOp(lexemas[iterador+1].token))
+            else if(Saliente.simbolo == "operacion_1" && (esOp(lexemas[iterador+1].token)||esOpl(lexemas[iterador+1].token)))
             {
-                Entrante = nTerminales[componenteID("valor",nTerminales)].reglas[0];
+                //Entrante = nTerminales[componenteID("valor",nTerminales)].reglas[0];
+                siguienteProduccion(Entrante,"valor",lexemas[iterador].token,nTerminales,terminales,ts);
+                busqueda = 1;
+            }
+            else if(Saliente.simbolo == "cuerpo" && (esOp(lexemas[iterador+1].token)||esOpl(lexemas[iterador+1].token)))
+            {
+                Entrante = nTerminales[componenteID(Saliente.simbolo,nTerminales)].reglas[2];
+                busqueda = 1;
+            }
+            else if(Saliente.simbolo == "cuerpo_bucle" && (esOp(lexemas[iterador+1].token)||esOpl(lexemas[iterador+1].token)))
+            {
+                Entrante = nTerminales[componenteID(Saliente.simbolo,nTerminales)].reglas[2];
                 busqueda = 1;
             }
             else
@@ -462,6 +494,10 @@ bool aSintactico(vector <Lexema> lexemas)
     }
 
     cout<<endl<<endl<<"Cantidad de errores "<<errores<<endl<<endl;
+    for (int i=0; i<(int)lista_errores.size();i++)
+    {
+        cout << lista_errores[i] <<endl;
+    }
     return 1;
 
 }

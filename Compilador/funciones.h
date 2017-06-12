@@ -116,6 +116,28 @@ bool tramp(string &palabra)
                 i+=1;
                 //cout<<"her "<<temp<<endl;
             }
+            else if(palabra[i] == '=')
+            {
+                temp += palabra[i];
+                i+=1;
+                if (i<(int)palabra.size()&& palabra[i]=='=' )
+                {
+                    temp += palabra[i];
+                    i++;
+                }
+                temp += " ";
+            }
+            else if(palabra[i] == '/')
+            {
+                temp += palabra[i];
+                i+=1;
+                if (i<(int)palabra.size()&& palabra[i]=='=')
+                {
+                    temp += palabra[i];
+                    i++;
+                }
+                temp += " ";
+            }
             else //otros simbolos
             {
                 temp += palabra[i];
